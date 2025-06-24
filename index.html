@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deteksi IP & Lokasi</title>
+  <style>
+    :root {
+      --bg: #f0f0f0;
+      --card: #fff;
+      --text: #111;
+      --accent: #007bff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121212;
+        --card: #1e1e1e;
+        --text: #f5f5f5;
+        --accent: #1e90ff;
+      }
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: var(--text);
+    }
+
+    .card {
+      background: var(--card);
+      padding: 2rem 3rem;
+      border-radius: 1.2rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .data {
+      margin: 1rem 0;
+    }
+
+    .label {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    .value {
+      font-size: 1.3rem;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: #888;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 1.5rem;
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h1>📡 Info IP & Lokasi Kamu</h1>
+  <div class="data">
+    <div class="label">IP Address:</div>
+    <div class="value" id="ip">Memuat...</div>
+  </div>
+  <div class="data">
+    <div class="label">Kota:</div>
+    <div class="value" id="city">Memuat...</div>
+  </div>
+  <div class="data">
+    <div class="label">Negara:</div>
+    <div class="value" id="country">Memuat...</div>
+  </div>
+</div>
+
+<footer>&copy; 2025 Zation | Deteksi IP Otomatis</footer>
+
+<script>
+  fetch("https://ipapi.co/json/")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("ip").textContent = data.ip;
+      document.getElementById("city").textContent = data.city || "Tidak diketahui";
+      document.getElementById("country").textContent = data.country_name || "Tidak diketahui";
+    })
+    .catch(err => {
+      document.getElementById("ip").textContent = "Gagal memuat";
+      document.getElementById("city").textContent = "-";
+      document.getElementById("country").textContent = "-";
+      console.error(err);
+    });
+</script>
+
+</body>
+</html>
